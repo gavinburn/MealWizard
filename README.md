@@ -17,3 +17,5 @@ Personalized plans tailored to your fitness goals and culinary preferences — p
 - 📊 **Meal History**: Track previous meals to optimize planning  
 
 ---
+
+Created By @gavinburn & @MichaelTuccillo
