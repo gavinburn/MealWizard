@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LandingPage from "./LandingPage";
-import { Mail, Lock, Eye, EyeOff, Zap, Star, ChefHat } from "lucide-react";
+import { Eye, EyeOff, ArrowUpRight, ArrowRight } from "lucide-react";
+import AuthLayout, { AuthField } from "./AuthLayout";
 import MealPlannerApp from "./MainPage"; // Import your main app
 import CreateAccount from "./CreateAccount"; // Import your create account component
 import { apiService } from "../api_client";
@@ -19,6 +20,10 @@ const SignInPage = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [showSignIn, showCreateAccount, isSignedIn]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -86,7 +91,7 @@ const SignInPage = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+    if (isSubmitting || !validateForm()) return;
 
     setIsSubmitting(true);
 
@@ -163,7 +168,15 @@ const SignInPage = () => {
 
   // If showing create account, render the create account component
   if (showCreateAccount) {
-    return <CreateAccount onBack={() => setShowCreateAccount(false)} />;
+    return (
+      <CreateAccount
+        onBack={() => {
+          setShowCreateAccount(false);
+          setShowSignIn(true);
+          setErrors({});
+        }}
+      />
+    );
   }
 
   if (!showSignIn) {
@@ -178,168 +191,102 @@ const SignInPage = () => {
     );
   }
 
-  // Otherwise, show the sign-in form
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4">
-      <div className="max-w-md mx-auto">
-        <button
-          type="button"
-          onClick={() => setShowSignIn(false)}
-          className="mb-6 text-sm font-medium text-green-800"
-        >
-          ← Back to MealWizard
-        </button>
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 rounded-3xl p-6 text-white relative overflow-hidden mb-6">
-            <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
-            <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/10 rounded-full -ml-8 -mb-8"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <ChefHat className="w-8 h-8" />
-                <h1 className="text-3xl font-bold">MealWizard</h1>
-              </div>
-              <p className="text-white/90">
-                Sign in to continue your fitness journey
-              </p>
-              <div className="flex items-center justify-center gap-3 mt-4">
-                <div className="bg-white/20 rounded-full px-3 py-1 flex items-center gap-2">
-                  <Zap className="w-3 h-3" />
-                  <span className="text-xs font-medium">Meal Planning</span>
-                </div>
-                <div className="bg-white/20 rounded-full px-3 py-1 flex items-center gap-2">
-                  <Star className="w-3 h-3" />
-                  <span className="text-xs font-medium">Fitness Tracking</span>
-                </div>
-              </div>
-            </div>
+    <AuthLayout
+      onBack={() => {
+        setShowSignIn(false);
+        setErrors({});
+      }}
+    >
+      <span className="eyebrow">YOUR KITCHEN IS CALLING.</span>
+      <h1>Welcome back.</h1>
+      <p className="auth-intro">Sign in and pick up where you left off.</p>
+      <form
+        className="auth-form"
+        noValidate
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        {errors.general && (
+          <div className="auth-alert" role="alert">
+            {errors.general}
           </div>
-        </div>
-
-        {/* Sign In Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <form
-            className="space-y-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
-            {/* General Error */}
-            {errors.general && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-sm text-red-600">{errors.general}</p>
-              </div>
-            )}
-
-            {/* Email */}
-            <div>
-              <label
-                htmlFor="signin-email"
-                className="flex items-center text-sm font-medium text-gray-700 mb-2"
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Email
-              </label>
-              <input
-                id="signin-email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
-                  errors.email
-                    ? "border-red-300 focus:border-red-500"
-                    : "border-gray-200 focus:border-blue-500"
-                } focus:outline-none`}
-                placeholder="Enter your email"
-                autoComplete="email"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-              )}
-            </div>
-
-            {/* Password */}
-            <div>
-              <label
-                htmlFor="signin-password"
-                className="flex items-center text-sm font-medium text-gray-700 mb-2"
-              >
-                <Lock className="w-4 h-4 mr-2" />
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="signin-password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-colors ${
-                    errors.password
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-blue-500"
-                  } focus:outline-none`}
-                  placeholder="Enter your password"
-                  autoComplete="current-password"
-                />
-                <button
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-              )}
-            </div>
-            {/* Submit Button */}
-            <button
-              type="submit"
+        )}
+        <AuthField label="Email address" name="email" error={errors.email}>
+          <input
+            id="auth-email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="you@example.com"
+            autoComplete="email"
+            required
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "auth-email-error" : undefined}
+            disabled={isSubmitting}
+          />
+        </AuthField>
+        <AuthField label="Password" name="password" error={errors.password}>
+          <div className="auth-password">
+            <input
+              id="auth-password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              placeholder="Your password"
+              autoComplete="current-password"
+              required
+              aria-invalid={!!errors.password}
+              aria-describedby={
+                errors.password ? "auth-password-error" : undefined
+              }
               disabled={isSubmitting}
-              className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all ${
-                isSubmitting
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transform hover:scale-105"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
-            >
-              {isSubmitting ? "Signing In..." : "Sign In"}
-            </button>
-            {/* NEW: Try as demo */}
+            />
             <button
               type="button"
-              onClick={handleDemo}
-              disabled={isSubmitting}
-              className="w-full inline-flex justify-center items-center gap-2 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-800 px-5 py-3 font-medium"
-              title="Create a temporary demo account with sample data"
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
             >
-              Try as demo
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
-          </form>
-
-          {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Don't have an account?{" "}
-              <button
-                onClick={() => setShowCreateAccount(true)}
-                className="text-blue-600 hover:text-blue-800 font-medium"
-              >
-                Create Account
-              </button>
-            </p>
           </div>
+        </AuthField>
+        <button
+          className="landing-button auth-submit"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Signing in…" : "Sign in"} <ArrowUpRight size={19} />
+        </button>
+        <div className="auth-divider">
+          <span>Just looking around?</span>
         </div>
-      </div>
-    </div>
+        <button
+          className="auth-demo"
+          type="button"
+          onClick={handleDemo}
+          disabled={isSubmitting}
+        >
+          Try the demo <ArrowRight size={17} />
+        </button>
+      </form>
+      <p className="auth-switch">
+        New to MealWizard?{" "}
+        <button
+          onClick={() => {
+            setShowCreateAccount(true);
+            setErrors({});
+          }}
+        >
+          Create an account
+        </button>
+      </p>
+    </AuthLayout>
   );
 };
 
