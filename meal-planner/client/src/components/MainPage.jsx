@@ -51,7 +51,7 @@ export default function MealPlannerApp({ userEmail, onSignOut }) {
       case "plans":
         return <Plans />;
       case "favorites":
-        return <Favorites />;
+        return <Favorites onNavigate={setActiveTab} />;
       default:
         return <Dashboard onNavigate={setActiveTab} />;
     }
