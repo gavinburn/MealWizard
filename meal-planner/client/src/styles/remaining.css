@@ -237,3 +237,213 @@
     padding: 22px;
   }
 }
+
+/* Meal plans */
+.plans-content {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.plans-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.plans-title {
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 5vw, 58px);
+  letter-spacing: -2px;
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 12px 0 8px;
+  color: #203c2e;
+}
+.plans-heading p {
+  font-size: 13px;
+  color: #68736a;
+  margin: 0;
+}
+.plans-create-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #244b35;
+  color: #fff;
+  border: 1px solid #244b35;
+  border-radius: 7px;
+  padding: 11px 16px;
+  font-size: 12px;
+}
+.plans-create-button > div {
+  background: none;
+  padding: 0;
+}
+.plans-create-button:hover {
+  background: #356346;
+}
+.plans-saved-card,
+.plans-preview-card {
+  background: #fffefa;
+  border: 1px solid #dce2d6;
+  border-radius: 10px;
+  box-shadow: none;
+}
+.plans-saved-card:hover {
+  border-color: #bacbb8;
+}
+.plans-saved-card > div,
+.plans-preview-card {
+  padding: 25px;
+}
+.plans-saved-card .text-2xl.font-bold {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #203c2e;
+}
+.plans-saved-card button,
+.plans-preview-card button {
+  border-radius: 7px;
+  box-shadow: none;
+  font-size: 11px;
+}
+.plans-saved-card button:hover,
+.plans-preview-card button:hover {
+  transform: none;
+}
+.plans-saved-card .bg-gradient-to-br,
+.plans-preview-card .bg-gradient-to-br,
+.plans-saved-card .bg-gradient-to-r,
+.plans-preview-card .bg-gradient-to-r {
+  background: #edf1e6;
+}
+.plans-saved-card .text-blue-600,
+.plans-saved-card .text-purple-600,
+.plans-saved-card .text-emerald-600,
+.plans-saved-card .text-orange-600,
+.plans-preview-card .text-blue-600,
+.plans-preview-card .text-purple-600 {
+  color: #244b35;
+}
+.plans-saved-card .text-blue-900,
+.plans-saved-card .text-purple-900,
+.plans-saved-card .text-emerald-900,
+.plans-saved-card .text-orange-900 {
+  color: #203c2e;
+}
+.plans-saved-card .text-blue-600\/80,
+.plans-saved-card .text-emerald-600\/80,
+.plans-saved-card .text-purple-600\/80,
+.plans-saved-card .text-orange-600\/80 {
+  color: #68736a;
+}
+.plans-saved-card .bg-emerald-100,
+.plans-preview-card .bg-blue-100 {
+  background: #edf1e6;
+  color: #244b35;
+}
+.plans-saved-card button.bg-white,
+.plans-preview-card button.bg-white {
+  background: #fffefa;
+  border-color: #dce2d6;
+  color: #244b35;
+}
+.plans-saved-card .border-gray-200\/50,
+.plans-preview-card .border-gray-200\/50 {
+  border-color: #dce2d6;
+}
+.plans-preview-card button.bg-gradient-to-r {
+  background: #244b35;
+  color: #fff;
+}
+.plans-empty {
+  border: 1px dashed #cbd6c8;
+  background: #fffefa;
+  border-radius: 10px;
+  padding: 70px 20px;
+  text-align: center;
+}
+.plans-empty .bg-gradient-to-br {
+  background: #edf1e6;
+  box-shadow: none;
+}
+.plans-empty .text-blue-600 {
+  color: #244b35;
+}
+.plans-empty .text-2xl {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #203c2e;
+}
+.plans-empty .text-lg {
+  font-size: 13px;
+  color: #68736a;
+}
+.plans-modal-root {
+  z-index: 60;
+}
+.plans-modal-position {
+  max-height: calc(100vh - 50px);
+  overflow: auto;
+  padding: 0 12px;
+}
+.plans-modal-position .bg-white.rounded-3xl {
+  background: #fffefa;
+  border: 1px solid #dce2d6;
+  border-radius: 10px;
+  box-shadow: 0 25px 70px #12261a33;
+}
+.plans-modal-position .bg-gradient-to-r.from-blue-50 {
+  background: #eff2e9;
+}
+.plans-modal-position h3 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #203c2e;
+}
+.plans-modal-position input {
+  background: #fffefa;
+  border: 1px solid #dce2d6;
+  border-radius: 7px;
+}
+.plans-modal-position input:focus {
+  outline: 2px solid #77966c;
+  outline-offset: 1px;
+}
+.plans-modal-position button.bg-gradient-to-r {
+  background: #244b35;
+  color: #fff;
+  border-radius: 7px;
+  box-shadow: none;
+}
+.plans-page button:focus-visible {
+  outline: 3px solid #bf773b;
+  outline-offset: 2px;
+}
+@media (max-width: 760px) {
+  .plans-heading {
+    display: block;
+  }
+  .plans-create-button {
+    margin-top: 20px;
+  }
+  .plans-saved-card > div,
+  .plans-preview-card {
+    padding: 20px;
+  }
+  .plans-saved-card .flex.items-center.justify-between.mb-6 {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .plans-saved-card .flex.items-center.gap-3 {
+    flex-wrap: wrap;
+  }
+  .plans-modal-position {
+    top: 20px;
+  }
+}
